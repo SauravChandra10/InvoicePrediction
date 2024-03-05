@@ -161,4 +161,4 @@ cython_debug/
 
 
 # files specific to this project
-.artifacts/
+.artifacts
