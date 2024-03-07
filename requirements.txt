@@ -3,4 +3,5 @@ pandas
 scikit-learn
 pickle
 openpyxl
+dataclasses
 # -e .
