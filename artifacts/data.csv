@@ -1,4 +1,4 @@
-Customer Name,Invoice Date ,Credit Terms,Actual Delay over and above Agreed Credit Terms,Invoice Currency,Invoice Amount
+Customer Name,Invoice Date,Credit Terms,Actual Delay over and above Agreed Credit Terms,Invoice Currency,Invoice Amount
 1,2023-10-31,30,42.0,USD,56800.0
 1,2023-11-30,30,,USD,50440.0
 1,2023-12-31,30,-11.0,USD,40640.0

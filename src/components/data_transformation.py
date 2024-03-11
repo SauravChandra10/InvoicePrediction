@@ -80,12 +80,12 @@ class DataTransformation:
             df = df.dropna(subset=['Actual Delay over and above Agreed Credit Terms'])
 
             # covert date into day,month and year
-            df['Invoice Date '] = pd.to_datetime(df['Invoice Date '], format='%Y-%m-%d')
-            df['Day'] = df['Invoice Date '].dt.day
-            df['Month'] = df['Invoice Date '].dt.month
-            df['Year'] = df['Invoice Date '].dt.year
+            df['Invoice Date'] = pd.to_datetime(df['Invoice Date'], format='%Y-%m-%d')
+            df['Day'] = df['Invoice Date'].dt.day
+            df['Month'] = df['Invoice Date'].dt.month
+            df['Year'] = df['Invoice Date'].dt.year
 
-            df.drop(columns=['Invoice Date '],inplace=True)
+            df.drop(columns=['Invoice Date'],inplace=True)
 
             X=df.drop(['Actual Delay over and above Agreed Credit Terms'],axis=1)
             y=df['Actual Delay over and above Agreed Credit Terms']
