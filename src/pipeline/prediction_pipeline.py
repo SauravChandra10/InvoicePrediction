@@ -21,7 +21,6 @@ class PredictPipeline:
             df.drop_duplicates(inplace=True)
 
             # remove NaN
-            df = df.dropna(subset=['Actual Delay over and above Agreed Credit Terms'])
 
             # covert date into day,month and year
             df['Invoice Date'] = pd.to_datetime(df['Invoice Date'], format='%d-%m-%Y')
@@ -31,11 +30,7 @@ class PredictPipeline:
 
             df.drop(columns=['Invoice Date'],inplace=True)
 
-            X=df.drop(['Actual Delay over and above Agreed Credit Terms'],axis=1)      
-
-            print(X.head())      
-
-            data_scaled = preprocessor.transform(X)
+            data_scaled = preprocessor.transform(df)
 
             pred = model.predict(data_scaled)
 
