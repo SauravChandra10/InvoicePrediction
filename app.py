@@ -102,8 +102,9 @@ def predictJSON():
             res={
                 'status' : True,
                 'message' : 'Prediction done successfully',
-                'data' : pred
+                'data' : pred[0]
             }
+            
             return jsonify(res)
 
         except Exception as e:
