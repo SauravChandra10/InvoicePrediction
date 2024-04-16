@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, jsonify
-import numpy as np
 import pandas as pd
 import sys
 
@@ -56,10 +55,12 @@ def predict():
 
             pred = predict_pipeline.predict(df)
 
+            prediction_list = pred.tolist()
+
             res = {
                  'status' : True,
                  'message' : 'Prediction done successfully',
-                 'data' : pred
+                 'data' : prediction_list
             }
 
             return jsonify(res)

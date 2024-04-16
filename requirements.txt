@@ -4,4 +4,4 @@ scikit-learn
 openpyxl
 dataclasses
 dill
-# -e .
+-e .
