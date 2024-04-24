@@ -100,10 +100,12 @@ def predictJSON():
 
             pred = predict_pipeline.predict(df)
 
+            prediction_list = pred.tolist()
+
             res={
                 'status' : True,
                 'message' : 'Prediction done successfully',
-                'data' : pred[0]
+                'data' : prediction_list
             }
             
             return jsonify(res)
@@ -145,12 +147,12 @@ def train():
             train_arr, test_arr, _ = data_transformation.initiate_data_transformation(data_path)
 
             model_trainer = ModelTrainer()
-            model_trainer.initiate_model_trainer(train_arr,test_arr)
+            model_name, model_score = model_trainer.initiate_model_trainer(train_arr,test_arr)
 
             res={
                 "status":True,
-                "message":"Training done successfully",
-                "data":"model created at artifacts/model.pkl"
+                "message": "Training done successfully",
+                "data": f"model created at artifacts/model.pkl, best model is {model_name} and rmse is {model_score}"
             }
 
             return jsonify(res)

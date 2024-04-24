@@ -5,8 +5,9 @@ import numpy as np
 from dataclasses import dataclass
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from sklearn.linear_model import LinearRegression
 
-from src.utils import save_object
+from src.utils import save_object, evaluate_models
 from src.logger import logging
 from src.exception import CustomException
 
@@ -20,8 +21,6 @@ class ModelTrainer:
 
     def initiate_model_trainer(self,train_arr,test_arr):
         try:
-            logging.info('Spliting train and test arr')
-
             X_train,y_train,X_test,y_test = (
                 train_arr[:,:-1],
                 train_arr[:,-1],
@@ -29,27 +28,39 @@ class ModelTrainer:
                 test_arr[:,-1]
             )
 
-            model = GradientBoostingRegressor(
-                learning_rate = 0.001,
-                max_depth = 8,
-                n_estimators = 2000,
-                subsample = 0.5
+            models = {
+                "Gradient Boosting Regressor" : GradientBoostingRegressor(),
+                "Linear Regression" : LinearRegression()
+            }
+
+            params = {
+                "Gradient Boosting Regressor":{
+                    "learning_rate" : [0.001],
+                    "max_depth" : [8],
+                    "n_estimators" : [2000],
+                    "subsample" : [0.5]
+                },
+                "Linear Regression":{}
+            }
+
+            model_report:dict = evaluate_models(
+                X_train,y_train,X_test,y_test,models,params
             )
 
-            model.fit(X_train,y_train)
+            best_score = min(model_report.values())
 
-            pred = model.predict(X_test)
+            best_model_name = list(model_report.keys())[list(model_report.values()).index(best_score)]
 
-            r2 = r2_score(y_test,pred)
-            mae = mean_absolute_error(y_test,pred)
-            rmse = np.sqrt(mean_squared_error(y_test,pred))
+            best_model = models[best_model_name]
 
-            logging.info(f"r2:{r2}, mae:{mae}, rmse:{rmse}")
+            logging.info(f"{best_model_name}")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
-                obj = model
+                obj = best_model
             )
+
+            return best_model_name,best_score
 
         except Exception as e:
             raise CustomException(e,sys)
